@@ -54,7 +54,7 @@ class SQLiteProvider implements ProviderInterface {
         // TODO: Implement getRank() method.
     }
 
-    public function setRank(Player $player, string $type, string $rank)
+    public function setRank(Player $player, string $rank)
     {
         // TODO: Implement setRank() method.
     }
@@ -77,5 +77,10 @@ class SQLiteProvider implements ProviderInterface {
     public function addDeath(Player $player, int $death)
     {
         // TODO: Implement removeKill() method.
+    }
+
+    public function addPvPRank(Player $player)
+    {
+        // TODO: Implement addPvPRank() method.
     }
 }
