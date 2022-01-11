@@ -23,7 +23,7 @@ class Setrank extends PluginCommand{
                 if (isset($args[1])){
                     $grade = $args[1];
                     if (in_array($grade, NephtysPlayer::GRADES)){
-                        $target->setRank('normal', $grade);
+                        $target->setRank($grade);
                     } else $sender->sendMessage("Je ne trouve pas le grade");
                 } else $sender->sendMessage("Usage : /setrank (joueur) (grade)");
             } else $sender->sendMessage("Le joueur n'est pas connecté");
