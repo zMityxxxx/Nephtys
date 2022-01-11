@@ -81,25 +81,21 @@ class YamlProvider implements ProviderInterface{
         }
     }
 
-    public function setRank(Player $player, string $type, string $rank)
+    public function setRank(Player $player, string $rank)
     {
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
+        $nephtys->set('rank', [$rank, $this->getRank($player, 'pvp')]);
+        $nephtys->save();
+    }
 
-        switch ($type){
-            case "normal":
-                $player->sendMessage('Changement de ton grade de serveur ...');
-                $nephtys->set("rank", [$rank, $this->getRank($player, "pvp")]);
-                $nephtys->save();
-                if ($this->getRank($player, 'normal') === $rank) $player->sendMessage("Votre grade a été correctement changé!");
-                return true;
-            case "pvp":
-                $player->sendMessage('Changement de ton grade pvp ...');
-                $nephtys->set("rank", [$this->getRank($player, "normal"), $rank]);
-                $nephtys->save();
-                return true;
-            default:
-                return "Mettez un bon type";
-        }
+    public function addPvPRank(Player $player)
+    {
+        $rank = $this->getRank($player, 'pvp');
+        $key = array_search($rank, NephtysPlayer::PVP_GRADE);
+        $newrank = NephtysPlayer::PVP_GRADE[$key + 1];
+        $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
+        $nephtys->set("rank", [$this->getRank($player, 'normal'), $newrank]);
+        $nephtys->save();
     }
 
     public function getKills(Player $player)
