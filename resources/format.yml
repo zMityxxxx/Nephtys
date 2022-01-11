@@ -1,0 +1,5 @@
+Joueur: "§6[{pvpgrade} - {elo}] §r{grade_normal} §6{joueur} >> §r{message}"
+Guide: "§1[{pvpgrade} - {elo}] §r{grade_normal} §1{joueur} >> §r{message}"
+Moderateur: "§2[{pvpgrade} - {elo}] §r{grade_normal} §2{joueur} >> §r{message}"
+Administrateur: "§3[{pvpgrade} - {elo}] §r{grade_normal} §3{joueur} >> §r{message}"
+Fondateur: "§4[{pvpgrade} - {elo}] §r{grade_normal} §4{joueur} >> §r{message}"
