@@ -53,6 +53,8 @@ class NephysListener implements Listener{
                 $elolooser = $resultats['b'] > 0 ? $resultats['b'] : 0;
                 $damager->setElos($elowinner);
                 $victim->setElos($elolooser);
+                $victim->addDeath(1);
+                $damager->addKill(1);
 
                 if ($damager->getElo() >= 125){
                     $damager->addRank();
