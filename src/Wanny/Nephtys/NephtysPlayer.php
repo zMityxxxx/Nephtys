@@ -40,8 +40,12 @@ class NephtysPlayer extends Player{
         return Core::getInstance()->getProvider()->getRank($this, $type);
     }
 
-    public function setRank(string $type, string $rank) {
-        return Core::getInstance()->getProvider()->setRank($this, $type, $rank);
+    public function setRank(string $rank) {
+        return Core::getInstance()->getProvider()->setRank($this, $rank);
+    }
+
+    public function addRank(){
+        return Core::getInstance()->getProvider()->addPvPRank($this);
     }
 
     public function getFormat(string $rank) {
