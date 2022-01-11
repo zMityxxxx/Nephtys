@@ -17,7 +17,14 @@ class Elo extends PluginCommand{
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        if ($sender instanceof NephtysPlayer) $sender->sendMessage("Vous avez {$sender->getElo()} Elo!");
+        if (!$sender instanceof NephtysPlayer) {
+            if (isset($args[0])){
+                $target = $this->core->getServer()->getPlayer($args[0]);
+                if ($target instanceof NephtysPlayer){
+                    $sender->sendMessage("{$target->getName()} a {$target->getElo()} elo");
+                } else $sender->sendMessage("Le joueur n'est pas connecté");
+            } else $sender->sendMessage("Usage /elo (joueur)");
+        } else $sender->sendMessage("Vous avez {$sender->getElo()} Elo!");
     }
 
 }
