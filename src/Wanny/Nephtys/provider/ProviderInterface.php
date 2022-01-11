@@ -24,7 +24,9 @@ interface ProviderInterface{
 
     public function getRank(Player $player, string $type);
 
-    public function setRank(Player $player, string $type ,string $rank);
+    public function setRank(Player $player, string $rank);
+
+    public function addPvPRank(Player $player);
 
     public function getKills(Player $player);
 
