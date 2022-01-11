@@ -30,8 +30,6 @@ class NephysListener implements Listener{
     public function onChat(PlayerChatEvent $event){
         $player = $event->getPlayer();
         if ($player instanceof NephtysPlayer){
-            $player->addDeath(1);
-            $player->addElos(5);
             $nrml = $player->getRank("normal");
             $pvp = $player->getRank("pvp");
             $elo = $player->getElo();
