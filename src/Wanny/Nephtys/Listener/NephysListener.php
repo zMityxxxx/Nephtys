@@ -7,9 +7,9 @@ use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\Player;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\NephtysPlayer;
+use Wanny\Nephtys\utils\EloSystem;
 
 class NephysListener implements Listener{
     private $core;
@@ -42,14 +42,24 @@ class NephysListener implements Listener{
     }
 
     public function onDeath(PlayerDeathEvent $event){
-        /*$cause = $victim->getLastDamageCause();
+        $victim = $event->getEntity();
+        $cause = $victim->getLastDamageCause();
         if ($cause instanceof EntityDamageByEntityEvent){
             $damager = $cause->getDamager();
-            if ($damager instanceof NephtysPlayer and $victim instanceof NephtysPlayer){
+            if ($victim instanceof NephtysPlayer and $damager instanceof NephtysPlayer){
+                $rating = new EloSystem($damager->getElo(), $victim->getElo(), EloSystem::WIN, EloSystem::LOST);
+                $resultats = $rating->getNewRatings();
+                $elowinner = $resultats['a'];
+                $elolooser = $resultats['b'] > 0 ? $resultats['b'] : 0;
+                $damager->setElos($elowinner);
+                $victim->setElos($elolooser);
 
+                if ($damager->getElo() >= 125){
+                    $damager->addRank();
+
+                }
             }
         }
-        */
     }
 
     public function creation(PlayerCreationEvent $event) : void{
