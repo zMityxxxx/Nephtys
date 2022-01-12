@@ -21,9 +21,7 @@ class NephysListener implements Listener{
     public function onJoin(PlayerJoinEvent $event){
         $player = $event->getPlayer();
         if ($player instanceof NephtysPlayer){
-            if (!$player->hasPlayedBefore()){
-                $player->create();
-            }
+            $player->create();
         }
     }
 
