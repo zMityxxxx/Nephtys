@@ -31,14 +31,16 @@ class YamlProvider implements ProviderInterface{
 
     public function createAccount(Player $player)
     {
+
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
-        if (!$this->exists($player)){
-            $nephtys->set("elo", 0);
-            $nephtys->set("rank", [NephtysPlayer::GRADES[0], NephtysPlayer::PVP_GRADE[0]]);
-            $nephtys->set("kill", 0);
-            $nephtys->set("death", 0);
-            $nephtys->save();
-        }
+        //if (!$this->exists($player)){
+        if(!$nephtys->exists("elo")) $nephtys->set("elo", 0);
+        if(!$nephtys->exists("rank")) $nephtys->set("rank", [NephtysPlayer::GRADES[0], NephtysPlayer::PVP_GRADE[0]]);
+        if(!$nephtys->exists("kill")) $nephtys->set("kill", 0);
+        if(!$nephtys->exists("death")) $nephtys->set("death", 0);
+        $nephtys->save();
+        //}
+
     }
 
     public function getElos(Player $player)
