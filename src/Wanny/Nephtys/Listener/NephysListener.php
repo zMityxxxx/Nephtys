@@ -30,7 +30,7 @@ class NephysListener implements Listener{
             foreach ($permissions as $permission) {
                 $attachment = $player->addAttachment(Core::getInstance());
                 $attachment->setPermission($permission, true);
-                $player->addAttachment(Core::getInstance(),$permission);
+                $player->addAttachment(Core::getInstance(), $permission);
             }
         }
     }
