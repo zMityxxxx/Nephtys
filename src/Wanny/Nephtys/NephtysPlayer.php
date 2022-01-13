@@ -7,7 +7,7 @@ use pocketmine\utils\Config;
 
 class NephtysPlayer extends Player{
 
-    const GRADES = ["Joueur", "Guide", "Moderateur", "Administrateur", "Fondateur"];
+    const GRADES = ["Joueur", "Vizir", "Scribe", "Pharaon", "Guide", "Moderateur", "Administrateur", "Fondateur"];
 
     const PVP_GRADE = ["Bronze I", "Bronze II", "Bronze III", "Bronze IV", "Bronze V"];
     const MONEY_BASE = 0;
