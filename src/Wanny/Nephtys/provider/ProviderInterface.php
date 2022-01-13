@@ -36,4 +36,12 @@ interface ProviderInterface{
 
     public function addDeath(Player $player, int $death);
 
+    public function getMoney(Player $player);
+
+    public function addMoney(Player $player, int $money);
+
+    public function removeMoney(Player $player, int $money);
+
+    public function setMoney(Player $player, int $money);
+
 }
