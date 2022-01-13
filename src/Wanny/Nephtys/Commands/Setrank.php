@@ -17,6 +17,12 @@ class Setrank extends PluginCommand{
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
+
+        if ($sender instanceof NephtysPlayer and !$sender->hasPermission("admin")){
+            $sender->sendMessage("Vous n'avez pas la permssion");
+            return false;
+        }
+
         if (isset($args[0])){
             $target = $this->core->getServer()->getPlayer($args[0]);
             if ($target instanceof NephtysPlayer){
