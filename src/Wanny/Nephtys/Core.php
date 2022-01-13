@@ -4,6 +4,9 @@ namespace Wanny\Nephtys;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use Wanny\Nephtys\Commands\Elo;
+use Wanny\Nephtys\Commands\MoneyCmd\Money;
+use Wanny\Nephtys\Commands\MoneyCmd\Pay;
+use Wanny\Nephtys\Commands\MoneyCmd\Setmoney;
 use Wanny\Nephtys\Commands\Setrank;
 use Wanny\Nephtys\Commands\Stats;
 use Wanny\Nephtys\Listener\NephysListener;
@@ -31,7 +34,7 @@ class Core extends PluginBase implements Listener{
     }
 
     public function initCommands() : void {
-        $commandes = [new Setrank($this), new Elo($this), new Stats($this)];
+        $commandes = [new Setrank($this), new Elo($this), new Stats($this), new Money($this), new Setmoney($this), new Pay($this)];
         foreach ($commandes as $commande){
             $this->getServer()->getCommandMap()->register('Commandes', $commande);
         }
