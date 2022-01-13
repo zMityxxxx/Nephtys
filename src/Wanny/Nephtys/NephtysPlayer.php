@@ -10,6 +10,8 @@ class NephtysPlayer extends Player{
     const GRADES = ["Joueur", "Guide", "Moderateur", "Administrateur", "Fondateur"];
 
     const PVP_GRADE = ["Bronze I", "Bronze II", "Bronze III", "Bronze IV", "Bronze V"];
+    const MONEY_BASE = 0;
+    const ELO_BASE = 0;
 
     public function __construct(SourceInterface $interface, string $ip, int $port)
     {
@@ -67,6 +69,22 @@ class NephtysPlayer extends Player{
 
     public function addDeath(int $death) {
         return Core::getInstance()->getProvider()->addDeath($this, $death);
+    }
+
+    public function getMoney(){
+        return Core::getInstance()->getProvider()->getMoney($this);
+    }
+
+    public function addMoney(int $money){
+        return Core::getInstance()->getProvider()->addMoney($this, $money);
+    }
+
+    public function removeMoney(int $money){
+        return Core::getInstance()->getProvider()->removeMoney($this, $money);
+    }
+
+    public function setMoney(int $money){
+        return Core::getInstance()->getProvider()->setMoney($this, $money);
     }
 
 }
