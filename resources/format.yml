@@ -3,3 +3,13 @@ Guide: "§1[{pvpgrade} - {elo}] §r{grade_normal} §1{joueur} >> §r{message}"
 Moderateur: "§2[{pvpgrade} - {elo}] §r{grade_normal} §2{joueur} >> §r{message}"
 Administrateur: "§3[{pvpgrade} - {elo}] §r{grade_normal} §3{joueur} >> §r{message}"
 Fondateur: "§4[{pvpgrade} - {elo}] §r{grade_normal} §4{joueur} >> §r{message}"
+Vizir: "§5[{pvpgrade} - {elo}] §r{grade_normal} §5{joueur} >> §r{message}"
+Scribe: "§8[{pvpgrade} - {elo}] §r{grade_normal} §8{joueur} >> §r{message}"
+Pharaon: "§7[{pvpgrade} - {elo}] §r{grade_normal} §7{joueur} >> §r{message}"
+
+permissions:
+  Vizir: ["vizir"]
+  Scribe: ["vizir", "scribe"]
+  Pharaon: ["vizir", "scribe", "pharaon"]
+  Guide: ["guide"]
+  Moderateur: ["guide", "mod"]
