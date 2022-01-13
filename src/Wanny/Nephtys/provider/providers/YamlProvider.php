@@ -34,10 +34,11 @@ class YamlProvider implements ProviderInterface{
 
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
         //if (!$this->exists($player)){
-        if(!$nephtys->exists("elo")) $nephtys->set("elo", 0);
+        if(!$nephtys->exists("elo")) $nephtys->set("elo", NephtysPlayer::ELO_BASE);
         if(!$nephtys->exists("rank")) $nephtys->set("rank", [NephtysPlayer::GRADES[0], NephtysPlayer::PVP_GRADE[0]]);
         if(!$nephtys->exists("kill")) $nephtys->set("kill", 0);
         if(!$nephtys->exists("death")) $nephtys->set("death", 0);
+        if(!$nephtys->exists("money")) $nephtys->set("money", NephtysPlayer::MONEY_BASE);
         $nephtys->save();
         //}
 
@@ -123,6 +124,33 @@ class YamlProvider implements ProviderInterface{
     {
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
         $nephtys->set("death", $this->getDeaths($player) + $death);
+        $nephtys->save();
+    }
+
+    public function getMoney(Player $player)
+    {
+        $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
+        return $nephtys->exists("money") ? $nephtys->get("money") : NephtysPlayer::MONEY_BASE;
+    }
+
+    public function addMoney(Player $player, int $money)
+    {
+        $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
+        $nephtys->set("money", $this->getMoney($player) + $money);
+        $nephtys->save();
+    }
+
+    public function removeMoney(Player $player, int $money)
+    {
+        $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
+        $nephtys->set("money", $this->getMoney($player) - $money);
+        $nephtys->save();
+    }
+
+    public function setMoney(Player $player, int $money)
+    {
+        $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
+        $nephtys->set("money", $money);
         $nephtys->save();
     }
 }
