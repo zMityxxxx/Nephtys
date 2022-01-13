@@ -56,7 +56,7 @@ class NephysListener implements Listener{
 
                 if ($damager->getElo() >= 125){
                     $damager->addRank();
-
+                    $damager->setElos(NephtysPlayer::ELO_BASE);
                 }
             }
         }
