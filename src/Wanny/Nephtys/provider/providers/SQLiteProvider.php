@@ -83,4 +83,24 @@ class SQLiteProvider implements ProviderInterface {
     {
         // TODO: Implement addPvPRank() method.
     }
+
+    public function getMoney(Player $player)
+    {
+        // TODO: Implement getMoney() method.
+    }
+
+    public function addMoney(Player $player, int $money)
+    {
+        // TODO: Implement addMoney() method.
+    }
+
+    public function removeMoney(Player $player, int $money)
+    {
+        // TODO: Implement removeMoney() method.
+    }
+
+    public function setMoney(Player $player, int $money)
+    {
+        // TODO: Implement setMoney() method.
+    }
 }
