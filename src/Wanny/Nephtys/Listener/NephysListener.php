@@ -1,11 +1,18 @@
 <?php
-namespace Wanny\Nephtys\provider\providers;
+namespace Wanny\Nephtys\Listener;
 
-use pocketmine\Player;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerChatEvent;
+use pocketmine\event\player\PlayerCreationEvent;
+use pocketmine\event\player\PlayerDeathEvent;
+use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\utils\Config;
 use Wanny\Nephtys\Core;
-use Wanny\Nephtys\provider\ProviderInterface;
+use Wanny\Nephtys\NephtysPlayer;
+use Wanny\Nephtys\utils\EloSystem;
 
-class SQLiteProvider implements ProviderInterface {
+class NephysListener implements Listener{
 
     private $core;
 
@@ -14,93 +21,63 @@ class SQLiteProvider implements ProviderInterface {
         $this->core = $core;
     }
 
-    public function prepare()
-    {
-        return new \mysqli($this->core->getConfig()->get("hostname"), $this->core->getConfig()->get("username"), $this->core->getConfig()->get("password"), $this->core->getConfig()->get("database"));
+    public function onJoin(PlayerJoinEvent $event){
+        $player = $event->getPlayer();
+        if ($player instanceof NephtysPlayer){
+            $player->create();
+            $c = new Config(Core::getInstance()->getDataFolder() . "format.yml", 2);
+            $permissions = $c->get("permissions")[$player->getRank("normal")];
+            foreach ($permissions as $permission) {
+
+                $attachment = $player->addAttachment(Core::getInstance());
+                $attachment->setPermission($permission, true);
+
+                $player->addAttachment(Core::getInstance(),$permission);
+
+            }
+        }
     }
 
-    public function exists(Player $player)
-    {
-        // TODO: Implement exists() method.
+    public function onChat(PlayerChatEvent $event){
+        $player = $event->getPlayer();
+        if ($player instanceof NephtysPlayer){
+            $nrml = $player->getRank("normal");
+            $pvp = $player->getRank("pvp");
+            $elo = $player->getElo();
+            $message = $event->getMessage();
+            $name = $player->getName();
+            $mc = $player->getFormat($nrml);
+            $mc = str_replace(['{pvpgrade}', '{elo}', '{grade_normal}', '{joueur}', '{message}'], [$pvp, $elo, $nrml, $name, $message], $mc);
+            $event->setFormat($mc);
+        }
     }
 
-    public function createAccount(Player $player)
-    {
-        // TODO: Implement createAccount() method.
+    public function onDeath(PlayerDeathEvent $event){
+        $victim = $event->getEntity();
+        $cause = $victim->getLastDamageCause();
+        if ($cause instanceof EntityDamageByEntityEvent){
+            $damager = $cause->getDamager();
+            if ($victim instanceof NephtysPlayer and $damager instanceof NephtysPlayer){
+                $rating = new EloSystem($damager->getElo(), $victim->getElo(), EloSystem::WIN, EloSystem::LOST);
+                $resultats = $rating->getNewRatings();
+                $elowinner = $resultats['a'];
+                $elolooser = $resultats['b'] > 0 ? $resultats['b'] : 0;
+                $damager->setElos($elowinner);
+                $victim->setElos($elolooser);
+                $victim->addDeath(1);
+                $damager->addKill(1);
+
+                if ($damager->getElo() >= 125){
+                    $damager->addRank();
+                    $damager->setElos(NephtysPlayer::ELO_BASE);
+                }
+
+            }
+        }
     }
 
-    public function setElos(Player $player, int $elo)
-    {
-        // TODO: Implement setElos() method.
+    public function creation(PlayerCreationEvent $event) : void{
+        $event->setPlayerClass(NephtysPlayer::class);
     }
 
-    public function getElos(Player $player)
-    {
-        // TODO: Implement getElos() method.
-    }
-
-    public function addElos(Player $player, int $elo)
-    {
-        // TODO: Implement addElos() method.
-    }
-
-    public function removeElos(Player $player, int $elo)
-    {
-        // TODO: Implement removeElos() method.
-    }
-
-    public function getRank(Player $player, string $type)
-    {
-        // TODO: Implement getRank() method.
-    }
-
-    public function setRank(Player $player, string $rank)
-    {
-        // TODO: Implement setRank() method.
-    }
-
-    public function getKills(Player $player)
-    {
-        // TODO: Implement getKills() method.
-    }
-
-    public function getDeaths(Player $player)
-    {
-        // TODO: Implement getDeaths() method.
-    }
-
-    public function addKill(Player $player, int $kill)
-    {
-        // TODO: Implement addKill() method.
-    }
-
-    public function addDeath(Player $player, int $death)
-    {
-        // TODO: Implement removeKill() method.
-    }
-
-    public function addPvPRank(Player $player)
-    {
-        // TODO: Implement addPvPRank() method.
-    }
-
-    public function getMoney(Player $player)
-    {
-        // TODO: Implement getMoney() method.
-    }
-
-    public function addMoney(Player $player, int $money)
-    {
-        // TODO: Implement addMoney() method.
-    }
-
-    public function removeMoney(Player $player, int $money)
-    {
-        // TODO: Implement removeMoney() method.
-    }
-
-    public function setMoney(Player $player, int $money)
-    {
-        // TODO: Implement setMoney() method.
-    }
 }
