@@ -103,4 +103,9 @@ class SQLiteProvider implements ProviderInterface {
     {
         // TODO: Implement setMoney() method.
     }
+
+    public function getEcSlots(Player $player)
+    {
+        // TODO: Implement getEcSlots() method.
+    }
 }

@@ -7,11 +7,24 @@ use pocketmine\utils\Config;
 
 class NephtysPlayer extends Player{
 
-    const GRADES = ["Joueur", "Vizir", "Scribe", "Pharaon", "Guide", "Moderateur", "Administrateur", "Fondateur"];
+    const GRADES = ["Joueur", "Scribe", "Vizir", "Pharaon", "Guide", "Moderateur", "Administrateur", "Fondateur"];
 
     const PVP_GRADE = ["Bronze I", "Bronze II", "Bronze III", "Bronze IV", "Bronze V"];
     const MONEY_BASE = 0;
     const ELO_BASE = 0;
+    const ENDER_CHEST_SLOTS = [
+      "Joueur" => 5,
+        "Scribe" => 8,
+          "Vizir" => 10,
+            "Pharaon" => 12,
+              "Guide" => 12,
+                "Moderateur" => 12,
+                  "Administrateur" => 12,
+                    "Fondateur" => 12
+    ];
+
+    protected $freeze = false;
+    protected $tp = false;
 
     public function __construct(SourceInterface $interface, string $ip, int $port)
     {
@@ -85,6 +98,26 @@ class NephtysPlayer extends Player{
 
     public function setMoney(int $money){
         return Core::getInstance()->getProvider()->setMoney($this, $money);
+    }
+
+    public function getEcSlots(){
+        return Core::getInstance()->getProvider()->getEcSlots($this);
+    }
+
+    public function isFreeze(){
+        return $this->freeze !== false;
+    }
+
+    public function setFreeze(bool $value){
+        return $this->freeze = $value;
+    }
+
+    public function inTeleportation(){
+        return $this->freeze !== false;
+    }
+
+    public function setTeleportation(bool $value){
+        return $this->freeze = $value;
     }
 
 }

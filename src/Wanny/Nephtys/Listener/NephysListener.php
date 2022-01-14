@@ -25,13 +25,6 @@ class NephysListener implements Listener{
         $player = $event->getPlayer();
         if ($player instanceof NephtysPlayer){
             $player->create();
-            $c = new Config(Core::getInstance()->getDataFolder() . "format.yml", 2);
-            $permissions = $c->get("permissions")[$player->getRank("normal")];
-            foreach ($permissions as $permission) {
-                $attachment = $player->addAttachment(Core::getInstance());
-                $attachment->setPermission($permission, true);
-                $player->addAttachment(Core::getInstance(), $permission);
-            }
         }
     }
 

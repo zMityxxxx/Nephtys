@@ -6,6 +6,7 @@ use pocketmine\utils\Config;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\NephtysPlayer;
 use Wanny\Nephtys\provider\ProviderInterface;
+use Wanny\Nephtys\utils\Utils;
 
 class YamlProvider implements ProviderInterface{
 
@@ -39,6 +40,7 @@ class YamlProvider implements ProviderInterface{
         if(!$nephtys->exists("kill")) $nephtys->set("kill", 0);
         if(!$nephtys->exists("death")) $nephtys->set("death", 0);
         if(!$nephtys->exists("money")) $nephtys->set("money", NephtysPlayer::MONEY_BASE);
+        if(!$nephtys->exists("enderchest")) $nephtys->set("enderchest", 0);
         $nephtys->save();
         //}
 
@@ -88,6 +90,9 @@ class YamlProvider implements ProviderInterface{
     {
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
         $nephtys->set('rank', [$rank, $this->getRank($player, 'pvp')]);
+        if ($player instanceof NephtysPlayer)
+            Utils::savePermissions($player);
+
         $nephtys->save();
     }
 
@@ -152,5 +157,11 @@ class YamlProvider implements ProviderInterface{
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
         $nephtys->set("money", $money);
         $nephtys->save();
+    }
+
+    public function getEcSlots(Player $player)
+    {
+        $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
+        return NephtysPlayer::ENDER_CHEST_SLOTS[$this->getRank($player, "normal")] - $nephtys->get("enderchest");
     }
 }

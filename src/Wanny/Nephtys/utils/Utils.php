@@ -1,6 +1,10 @@
 <?php
 namespace Wanny\Nephtys\utils;
 
+use pocketmine\utils\Config;
+use Wanny\Nephtys\Core;
+use Wanny\Nephtys\NephtysPlayer;
+
 class Utils {
     public static function traductionTime(int $duration){
         $remainingTime=$duration - time();
@@ -18,4 +22,15 @@ class Utils {
           'seconde' => $second
         );
     }
+
+    public static function savePermissions(NephtysPlayer $player){
+        $c = new Config(Core::getInstance()->getDataFolder() . "format.yml", 2);
+        $permissions = $c->get("permissions")[$player->getRank("normal")];
+        foreach ($permissions as $permission) {
+            $attachment = $player->addAttachment(Core::getInstance());
+            $attachment->setPermission($permission, true);
+            $player->addAttachment(Core::getInstance(), $permission);
+        }
+    }
+
 }
