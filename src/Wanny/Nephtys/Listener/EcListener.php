@@ -19,7 +19,7 @@ class EcListener implements Listener
     }
 
 
-    public function onOpenEnderchest(InventoryOpenEvent $e): void
+   /* public function onOpenEnderchest(InventoryOpenEvent $e): void
     {
         $inv = $e->getInventory();
         $player = $e->getPlayer();
@@ -53,4 +53,5 @@ class EcListener implements Listener
             }
         }
     }
+   */
 }

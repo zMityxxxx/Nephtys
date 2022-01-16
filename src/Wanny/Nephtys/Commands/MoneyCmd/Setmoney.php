@@ -1,16 +1,16 @@
 <?php
 namespace Wanny\Nephtys\Commands\MoneyCmd;
 
+use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginCommand;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\NephtysPlayer;
 
-class Setmoney extends PluginCommand{
+class Setmoney extends Command {
     private $core;
     public function __construct(Core $core)
     {
-        parent::__construct("setmoney", $core);
+        parent::__construct("setmoney");
         $this->setDescription("Redéfinir la money d'un joueur");
         $this->core = $core;
     }
@@ -24,7 +24,7 @@ class Setmoney extends PluginCommand{
         }
 
         if (isset($args[0])){
-            $target = $this->core->getServer()->getPlayer($args[0]);
+            $target = $this->core->getServer()->getPlayerByPrefix($args[0]);
             if ($target instanceof NephtysPlayer){
                 if (isset($args[1])){
                     if (is_numeric($money = $args[1])){

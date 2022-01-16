@@ -1,16 +1,16 @@
 <?php
 namespace Wanny\Nephtys\Commands;
 
+use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginCommand;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\NephtysPlayer;
 
-class Stats extends PluginCommand{
+class Stats extends Command {
     private $core;
     public function __construct(Core $core)
     {
-        parent::__construct("stats", $core);
+        parent::__construct("stats");
         $this->setDescription("Voir les statistiques d'un joueur");
         $this->core = $core;
     }

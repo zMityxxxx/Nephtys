@@ -15,4 +15,4 @@ permissions:
   Guide: ["guide"]
   Moderateur: ["guide", "mod"]
   Administrateur: ["admin"]
-  Fondateur: ["fondateur"]
+  Fondateur: ["fondateur", "admin", "pharaon"]

@@ -1,7 +1,7 @@
 <?php
 namespace Wanny\Nephtys\provider\providers;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\provider\ProviderInterface;
 

@@ -1,16 +1,16 @@
 <?php
 namespace Wanny\Nephtys\Commands\MoneyCmd;
 
+use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginCommand;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\NephtysPlayer;
 
-class Pay extends PluginCommand {
+class Pay extends Command {
     private $core;
     public function __construct(Core $core)
     {
-        parent::__construct("pay", $core);
+        parent::__construct("pay");
         $this->setDescription('Payer un joueur');
         $this->core = $core;
     }
@@ -19,7 +19,7 @@ class Pay extends PluginCommand {
     {
         if (isset($args[0])){
             if ($sender instanceof NephtysPlayer){
-                $target = $this->core->getServer()->getPlayer($args[0]);
+                $target = $this->core->getServer()->getPlayerByPrefix($args[0]);
                 if ($target instanceof NephtysPlayer){
                     if (isset($args[1])){
                         if (is_numeric($money = $args[1])){
@@ -27,7 +27,7 @@ class Pay extends PluginCommand {
                                 $target->addMoney($money);
                                 $sender->removeMoney($money);
                                 $sender->sendMessage("{$target->getName()} a bien reçu $money de money");
-                                $target->sendMessage("{$target->getName()} vous a envoyé $money de money");
+                                $target->sendMessage("{$sender->getName()} vous a envoyé $money de money");
                             } else $sender->sendMessage("Vous n'avez pas la money!");
                         } else $sender->sendMessage("La valeur (money) doit être numérique !");
                     } else $sender->sendMessage("Usage : /pay (joueur) (money)");

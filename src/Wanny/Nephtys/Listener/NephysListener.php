@@ -7,10 +7,10 @@ use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\utils\Config;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\NephtysPlayer;
 use Wanny\Nephtys\utils\EloSystem;
+use Wanny\Nephtys\utils\Utils;
 
 class NephysListener implements Listener{
 
@@ -25,6 +25,7 @@ class NephysListener implements Listener{
         $player = $event->getPlayer();
         if ($player instanceof NephtysPlayer){
             $player->create();
+            Utils::savePermissions($player);
         }
     }
 

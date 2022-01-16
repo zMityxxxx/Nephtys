@@ -1,11 +1,11 @@
 <?php
 namespace Wanny\Nephtys;
 
-use pocketmine\network\SourceInterface;
-use pocketmine\Player;
+use pocketmine\player\Player;
+use pocketmine\Server;
 use pocketmine\utils\Config;
 
-class NephtysPlayer extends Player{
+class NephtysPlayer extends Player {
 
     const GRADES = ["Joueur", "Scribe", "Vizir", "Pharaon", "Guide", "Moderateur", "Administrateur", "Fondateur"];
 
@@ -23,13 +23,9 @@ class NephtysPlayer extends Player{
                     "Fondateur" => 12
     ];
 
+    private $teleportRequests = [];
     protected $freeze = false;
     protected $tp = false;
-
-    public function __construct(SourceInterface $interface, string $ip, int $port)
-    {
-        parent::__construct($interface, $ip, $port);
-    }
 
     public function getElo(){
         return Core::getInstance()->getProvider()->getElos($this);
@@ -112,12 +108,20 @@ class NephtysPlayer extends Player{
         return $this->freeze = $value;
     }
 
-    public function inTeleportation(){
-        return $this->freeze !== false;
+    public  function isRequestingTeleport(NephtysPlayer $player): bool {
+        return isset($this->teleportRequests[$player->getName()]) and ($this->teleportRequests[$player->getName()] - time()) <= 0;
     }
 
-    public function setTeleportation(bool $value){
-        return $this->freeze = $value;
+    public function addTeleportRequest(NephtysPlayer $player): void {
+        $this->teleportRequests[$player->getName()] = time() + 30;
+    }
+
+    public function removeTeleportRequest(NephtysPlayer $player) : void {
+        if (isset($this->teleportRequests[$player->getName()])) unset($this->teleportRequests[$player->getName()]);
+    }
+
+    public function isOp(): bool {
+        return Server::getInstance()->isOp($this->getName());
     }
 
 }

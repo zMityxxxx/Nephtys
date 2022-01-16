@@ -1,12 +1,12 @@
 <?php
 namespace Wanny\Nephtys\provider\providers;
 
-use pocketmine\Player;
 use pocketmine\utils\Config;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\NephtysPlayer;
 use Wanny\Nephtys\provider\ProviderInterface;
 use Wanny\Nephtys\utils\Utils;
+use pocketmine\player\Player;
 
 class YamlProvider implements ProviderInterface{
 
@@ -30,6 +30,9 @@ class YamlProvider implements ProviderInterface{
         return ($nephtys->exists($player->getName()));
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function createAccount(Player $player)
     {
 
@@ -76,14 +79,11 @@ class YamlProvider implements ProviderInterface{
     public function getRank(Player $player, string $type)
     {
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
-        switch ($type){
-            case "normal":
-                return $nephtys->exists("rank") ? $nephtys->get("rank")[0] : null;
-            case "pvp":
-                return $nephtys->exists("rank") ? $nephtys->get("rank")[1] : null;
-            default:
-                return "Mettez un bon type";
-        }
+        return match ($type) {
+            "normal" => $nephtys->exists("rank") ? $nephtys->get("rank")[0] : null,
+            "pvp" => $nephtys->exists("rank") ? $nephtys->get("rank")[1] : null,
+            default => "Mettez un bon type",
+        };
     }
 
     public function setRank(Player $player, string $rank)

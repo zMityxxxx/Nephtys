@@ -22,12 +22,11 @@ use Wanny\Nephtys\Listener\NephysListener;
 use Wanny\Nephtys\provider\ProviderInterface;
 use Wanny\Nephtys\provider\providers\SQLiteProvider;
 use Wanny\Nephtys\provider\providers\YamlProvider;
-use Wanny\Nephtys\utils\EloSystem;
 
 class Core extends PluginBase implements Listener{
     private $provider;
     private static $instance;
-    public function onEnable()
+    public function onEnable() : void
     {
         self::$instance = $this;
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -44,7 +43,8 @@ class Core extends PluginBase implements Listener{
 
     public function initCommands() : void {
         $commandes = [new Setrank($this), new Elo($this), new Stats($this), new Money($this), new Setmoney($this), new Pay($this), new Kit($this),
-            new Ec($this), new Tpa($this), new Tpahere($this), new Tpaccept($this), new Tpdeny($this), new Clear($this), new Freeze($this)];
+            new Ec($this), new Tpahere($this), new Tpaccept($this), new Tpdeny($this), new Clear($this), new Freeze($this),
+            new Clear($this)];
         foreach ($commandes as $commande){
             $this->getServer()->getCommandMap()->register('Commandes', $commande);
         }

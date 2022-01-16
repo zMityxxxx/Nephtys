@@ -1,55 +1,44 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
+
 
 namespace Wanny\Nephtys\Forms;
 
-use pocketmine\form\Form as IForm;
-use pocketmine\Player;
+use pocketmine\form\Form as PmForm;
 
-abstract class Form implements IForm{
+abstract class Form implements PmForm {
 
-    /** @var array */
-    protected $data = [];
-    /** @var callable|null */
-    private $callable;
+    private string $title;
 
-    /**
-     * @param callable|null $callable
-     */
-    public function __construct(?callable $callable) {
-        $this->callable = $callable;
+    public const TYPE_SIMPLE_FORM = "form";
+    public const TYPE_CUSTOM_FORM = "custom_form";
+    public const TYPE_MODAL_FORM = "modal";
+
+    public function __construct(string $title) {
+        $this->title = $title;
+        $this->onCreation();
     }
 
-    /**
-     * @see Player::sendForm()
-     *
-     * @param Player $player
-     */
-    public function sendToPlayer(Player $player) : void {
-        $player->sendForm($this);
+    public function getTitle(): string {
+        return $this->title;
     }
 
-    public function getCallable() : ?callable {
-        return $this->callable;
+    public function setTitle(string $title): void {
+        $this->title = $title;
     }
 
-    public function setCallable(?callable $callable) {
-        $this->callable = $callable;
+    abstract protected function getType(): string;
+
+    abstract protected function serializeBody(): array;
+
+    public function jsonSerialize(): array {
+        $body = $this->serializeBody();
+        $body["title"] = $this->title;
+        $body["type"] = $this->getType();
+        return $body;
     }
 
-    public function handleResponse(Player $player, $data) : void {
-        $this->processData($data);
-        $callable = $this->getCallable();
-        if($callable !== null) {
-            $callable($player, $data);
-        }
-    }
+    protected function onCreation(): void {}
 
-    public function processData(&$data) : void {
-    }
-
-    public function jsonSerialize(){
-        return $this->data;
-    }
 }
