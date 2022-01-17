@@ -28,9 +28,11 @@ class Boutique extends Command {
         if ($sender instanceof NephtysPlayer) {
             $form = new SimpleForm("Boutique", "Que voulez-vous acheter");
             $form->addButton(new Button("Acheter un slot d'enderchest", null, function (NephtysPlayer $player){$player->sendForm(new SlotShop());}));
-            $form->addButton(new Button("Clef de box", null, function (NephtysPlayer $player){$player->sendForm(new ClefShop());}));
-            $form->addButton(new Button("Tags", null, function (NephtysPlayer $player){$player->sendForm(new TagsShop());}));
+            $form->addButton(new Button("Acheter une clef de box", null, function (NephtysPlayer $player){$player->sendForm(new ClefShop());}));
+            $form->addButton(new Button("Acheter un tag", null, function (NephtysPlayer $player){$player->sendForm(new TagsShop());}));
             $form->addButton(new Button("Acheter un grade", null, function (NephtysPlayer $player){$player->sendForm(new RankShop());}));
+            $form->addButton(new Button("Acheter un kit", null, function (NephtysPlayer $player){$player->sendMessage("En développement");}));
+            $form->addButton(new Button("Acheter une commande", null, function (NephtysPlayer $player){$player->sendMessage("En développement");}));
             $sender->sendForm($form);
         }
     }
