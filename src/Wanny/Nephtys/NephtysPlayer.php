@@ -13,14 +13,14 @@ class NephtysPlayer extends Player {
     const MONEY_BASE = 0;
     const ELO_BASE = 0;
     const ENDER_CHEST_SLOTS = [
-      "Joueur" => 5,
-        "Scribe" => 8,
-          "Vizir" => 10,
-            "Pharaon" => 12,
-              "Guide" => 12,
-                "Moderateur" => 12,
-                  "Administrateur" => 12,
-                    "Fondateur" => 12
+      "Joueur" => 24,
+        "Scribe" => 21,
+          "Vizir" => 18,
+            "Pharaon" => 15,
+              "Guide" => 15,
+                "Moderateur" => 15,
+                  "Administrateur" => 15,
+                    "Fondateur" => 15
     ];
 
     private $teleportRequests = [];
@@ -94,10 +94,6 @@ class NephtysPlayer extends Player {
 
     public function setMoney(int $money){
         return Core::getInstance()->getProvider()->setMoney($this, $money);
-    }
-
-    public function getEcSlots(){
-        return Core::getInstance()->getProvider()->getEcSlots($this);
     }
 
     public function isFreeze(){

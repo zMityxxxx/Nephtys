@@ -25,22 +25,22 @@ class Clear extends VanillaCommand {
                     if (isset($args[1])) {
                         $target = $this->core->getServer()->getPlayerByPrefix($args[1]);
                         if ($target instanceof Player) {
-                            $target->getEnderInventory()->clear(true);
+                            $target->getEnderInventory()->clearAll();
                             $sender->sendMessage("Vous avez bien clear l'ec de {$target->getName()}");
                         } else $sender->sendMessage("Le joueur n'est pas connecté");
                     }
                 } else {
                     $target = $this->core->getServer()->getPlayerByPrefix($args[0]);
                     if ($target instanceof Player) {
-                        $target->getInventory()->clear(true);
-                        $target->getArmorInventory()->clear(true);
+                        $target->getInventory()->clearAll();
+                        $target->getArmorInventory()->clearAll();
                         $sender->sendMessage("Vous avez bien clear {$target->getName()}");
                     } else $sender->sendMessage("Le joueur n'est pas connecté");
                 }
             } else {
                 if ($sender instanceof Player) {
-                    $sender->getInventory()->clear(true);
-                    $sender->getArmorInventory()->clear(true);
+                    $sender->getInventory()->clearAll();
+                    $sender->getArmorInventory()->clearAll();
                     $sender->sendMessage("Vous avez bien clear votre inventaire");
                 } else $sender->sendMessage("Utilisez la commande en jeu");
             }

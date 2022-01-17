@@ -25,7 +25,7 @@ class NephysListener implements Listener{
         $player = $event->getPlayer();
         if ($player instanceof NephtysPlayer){
             $player->create();
-            Utils::savePermissions($player);
+            Utils::savePlayerPermissions($player);
         }
     }
 

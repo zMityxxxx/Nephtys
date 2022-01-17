@@ -43,7 +43,4 @@ interface ProviderInterface{
     public function removeMoney(Player $player, int $money);
 
     public function setMoney(Player $player, int $money);
-
-    public function getEcSlots(Player $player);
-
 }

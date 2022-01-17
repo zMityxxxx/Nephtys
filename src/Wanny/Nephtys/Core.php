@@ -3,6 +3,8 @@ namespace Wanny\Nephtys;
 
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
+use TheNote\core\invmenu\InvMenuHandler;
+use Wanny\Nephtys\Commands\Boutique;
 use Wanny\Nephtys\Commands\Clear;
 use Wanny\Nephtys\Commands\Ec;
 use Wanny\Nephtys\Commands\Elo;
@@ -13,7 +15,6 @@ use Wanny\Nephtys\Commands\MoneyCmd\Pay;
 use Wanny\Nephtys\Commands\MoneyCmd\Setmoney;
 use Wanny\Nephtys\Commands\Setrank;
 use Wanny\Nephtys\Commands\Stats;
-use Wanny\Nephtys\Commands\Teleportation\Tpa;
 use Wanny\Nephtys\Commands\Teleportation\Tpaccept;
 use Wanny\Nephtys\Commands\Teleportation\Tpahere;
 use Wanny\Nephtys\Commands\Teleportation\Tpdeny;
@@ -22,6 +23,7 @@ use Wanny\Nephtys\Listener\NephysListener;
 use Wanny\Nephtys\provider\ProviderInterface;
 use Wanny\Nephtys\provider\providers\SQLiteProvider;
 use Wanny\Nephtys\provider\providers\YamlProvider;
+use Wanny\Nephtys\utils\Utils;
 
 class Core extends PluginBase implements Listener{
     private $provider;
@@ -34,6 +36,9 @@ class Core extends PluginBase implements Listener{
         $this->initEvents();
         $this->initCommands();
         $this->getLogger()->info("§6NephtysElo ON - By Wanny");
+        if (!InvMenuHandler::isRegistered()) {
+            InvMenuHandler::register($this);
+        }
     }
 
     public function initEvents() : void {
@@ -43,8 +48,9 @@ class Core extends PluginBase implements Listener{
 
     public function initCommands() : void {
         $commandes = [new Setrank($this), new Elo($this), new Stats($this), new Money($this), new Setmoney($this), new Pay($this), new Kit($this),
-            new Ec($this), new Tpahere($this), new Tpaccept($this), new Tpdeny($this), new Clear($this), new Freeze($this),
+            new Ec($this), new Tpahere($this), new Tpaccept($this), new Tpdeny($this), new Clear($this), new Freeze($this), new Boutique($this),
             new Clear($this)];
+        //Utils::savePermissions();
         foreach ($commandes as $commande){
             $this->getServer()->getCommandMap()->register('Commandes', $commande);
         }

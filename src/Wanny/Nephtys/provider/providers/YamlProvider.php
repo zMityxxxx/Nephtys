@@ -91,7 +91,7 @@ class YamlProvider implements ProviderInterface{
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
         $nephtys->set('rank', [$rank, $this->getRank($player, 'pvp')]);
         if ($player instanceof NephtysPlayer)
-            Utils::savePermissions($player);
+            Utils::savePlayerPermissions($player);
 
         $nephtys->save();
     }
@@ -157,11 +157,5 @@ class YamlProvider implements ProviderInterface{
         $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
         $nephtys->set("money", $money);
         $nephtys->save();
-    }
-
-    public function getEcSlots(Player $player)
-    {
-        $nephtys = new Config($this->core->getDataFolder() . "Nephtys/{$player->getName()}.json", 1);
-        return NephtysPlayer::ENDER_CHEST_SLOTS[$this->getRank($player, "normal")] - $nephtys->get("enderchest");
     }
 }

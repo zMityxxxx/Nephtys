@@ -16,3 +16,7 @@ permissions:
   Moderateur: ["guide", "mod"]
   Administrateur: ["admin"]
   Fondateur: ["fondateur", "admin", "pharaon"]
+
+Scribe_price: 2000
+Vizir_price: 3000
+Pharaon_price: 4000

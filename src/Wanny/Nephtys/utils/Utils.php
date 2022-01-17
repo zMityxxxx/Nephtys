@@ -1,6 +1,9 @@
 <?php
 namespace Wanny\Nephtys\utils;
 
+use pocketmine\permission\Permission;
+use pocketmine\permission\PermissionManager;
+use pocketmine\Server;
 use pocketmine\utils\Config;
 use Wanny\Nephtys\Core;
 use Wanny\Nephtys\NephtysPlayer;
@@ -23,7 +26,7 @@ class Utils {
         );
     }
 
-    public static function savePermissions(NephtysPlayer $player){
+    public static function savePlayerPermissions(?NephtysPlayer $player){
         $c = new Config(Core::getInstance()->getDataFolder() . "format.yml", 2);
         $permissions = $c->get("permissions")[$player->getRank("normal")];
         foreach ($permissions as $permission) {
@@ -31,6 +34,17 @@ class Utils {
             $attachment->setPermission($permission, true);
             $player->addAttachment(Core::getInstance(), $permission);
         }
+    }
+
+    public static function savePermissions(){
+        $spermissions = ["joueur", "vizir", "scribe", "pharaon", "guide", "mod", "admin", "fondateur"];
+        foreach ($spermissions as $spermission){
+            PermissionManager::getInstance()->addPermission(new Permission($spermission));
+        }
+    }
+
+    public static function saveEc(NephtysPlayer $player){
+
     }
 
 }
